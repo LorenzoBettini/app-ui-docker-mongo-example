@@ -87,7 +87,22 @@
               <sources>
                 <source>src/it/java</source>
                 <source>src/e2e/java</source>
+                <source>src/bdd/java</source>
               </sources>
+            </configuration>
+          </execution>
+          <execution>
+            <id>add-test-resource</id>
+            <phase>generate-test-resources</phase>
+            <goals>
+              <goal>add-test-resource</goal>
+            </goals>
+            <configuration>
+              <resources>
+                <resource>
+                  <directory>src/bdd/resources</directory>
+                </resource>
+              </resources>
             </configuration>
           </execution>
         </executions>
