@@ -1,29 +1,27 @@
 package com.examples.school.view.swing;
 
-import java.awt.EventQueue;
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.List;
 
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 
 import com.examples.school.controller.SchoolController;
 import com.examples.school.model.Student;
 import com.examples.school.view.StudentView;
-import javax.swing.JTextField;
-import java.awt.Insets;
-
-import javax.swing.DefaultListModel;
-import javax.swing.JButton;
-import javax.swing.JList;
-import javax.swing.JScrollPane;
-import javax.swing.ListSelectionModel;
-import java.awt.Color;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 public class StudentSwingView extends JFrame implements StudentView {
 
@@ -41,23 +39,6 @@ public class StudentSwingView extends JFrame implements StudentView {
 	private DefaultListModel<Student> listStudentsModel;
 
 	private SchoolController schoolController;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					StudentSwingView frame = new StudentSwingView();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	DefaultListModel<Student> getListStudentsModel() {
 		return listStudentsModel;
