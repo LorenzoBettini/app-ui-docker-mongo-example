@@ -12,7 +12,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.examples.school.controller.SchoolController;
 import com.examples.school.model.Student;
 import com.examples.school.repository.StudentRepository;
 import com.examples.school.view.StudentView;
