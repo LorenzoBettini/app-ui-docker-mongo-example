@@ -1,7 +1,5 @@
 package com.examples.school.repository.mongo;
 
-import static com.examples.school.repository.mongo.StudentMongoRepository.SCHOOL_DB_NAME;
-import static com.examples.school.repository.mongo.StudentMongoRepository.STUDENT_COLLECTION_NAME;
 import static org.assertj.core.api.Assertions.*;
 
 import java.net.InetSocketAddress;
@@ -44,6 +42,9 @@ public class StudentMongoRepositoryTest {
 	private StudentMongoRepository studentRepository;
 	private MongoCollection<Document> studentCollection;
 
+	private static final String SCHOOL_DB_NAME = "school";
+	private static final String STUDENT_COLLECTION_NAME = "student";
+
 	@BeforeClass
 	public static void setupServer() {
 		server = new MongoServer(new MemoryBackend());
@@ -59,7 +60,8 @@ public class StudentMongoRepositoryTest {
 	@Before
 	public void setup() {
 		client = new MongoClient(new ServerAddress(serverAddress));
-		studentRepository = new StudentMongoRepository(client);
+		studentRepository =
+			new StudentMongoRepository(client, SCHOOL_DB_NAME, STUDENT_COLLECTION_NAME);
 		MongoDatabase database = client.getDatabase(SCHOOL_DB_NAME);
 		// make sure we always start with a clean database
 		database.drop();
