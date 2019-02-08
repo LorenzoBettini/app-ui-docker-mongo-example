@@ -19,6 +19,7 @@
     <mongo.java.server.version>1.24.0</mongo.java.server.version>
     <testcontainers.version>1.12.5</testcontainers.version>
     <picocli.version>4.2.0</picocli.version>
+    <cucumber.version>5.5.0</cucumber.version>
   </properties>
 
   <dependencies>
@@ -66,6 +67,18 @@
       <groupId>org.testcontainers</groupId>
       <artifactId>testcontainers</artifactId>
       <version>${testcontainers.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-java</artifactId>
+      <version>${cucumber.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-junit</artifactId>
+      <version>${cucumber.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
