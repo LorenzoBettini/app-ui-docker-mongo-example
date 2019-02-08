@@ -1,6 +1,9 @@
 package com.examples.school.view.swing;
 
 import static org.assertj.swing.launcher.ApplicationLauncher.*;
+
+import java.util.regex.Pattern;
+
 import static org.assertj.core.api.Assertions.*;
 
 import javax.swing.JFrame;
@@ -19,6 +22,7 @@ import org.junit.runner.RunWith;
 import org.testcontainers.containers.GenericContainer;
 
 import com.mongodb.MongoClient;
+import com.mongodb.client.model.Filters;
 
 @RunWith(GUITestRunner.class)
 public class SchoolSwingAppE2E extends AssertJSwingJUnitTestCase {
@@ -99,6 +103,29 @@ public class SchoolSwingAppE2E extends AssertJSwingJUnitTestCase {
 			.contains(STUDENT_FIXTURE_1_ID, STUDENT_FIXTURE_1_NAME);
 	}
 
+	@Test @GUITest
+	public void testDeleteButtonSuccess() {
+		window.list("studentList")
+			.selectItem(Pattern.compile(".*" + STUDENT_FIXTURE_1_NAME + ".*"));
+		window.button(JButtonMatcher.withText("Delete Selected")).click();
+		assertThat(window.list().contents())
+			.noneMatch(e -> e.contains(STUDENT_FIXTURE_1_NAME));
+	}
+
+	@Test @GUITest
+	public void testDeleteButtonError() {
+		// select the student in the list...
+		window.list("studentList")
+			.selectItem(Pattern.compile(".*" + STUDENT_FIXTURE_1_NAME + ".*"));
+		// ... in the meantime, manually remove the student from the database
+		removeTestStudentFromDatabase(STUDENT_FIXTURE_1_ID);
+		// now press the delete button
+		window.button(JButtonMatcher.withText("Delete Selected")).click();
+		// and verify an error is shown
+		assertThat(window.label("errorMessageLabel").text())
+			.contains(STUDENT_FIXTURE_1_ID, STUDENT_FIXTURE_1_NAME);
+	}
+
 	private void addTestStudentToDatabase(String id, String name) {
 		mongoClient
 			.getDatabase(DB_NAME)
@@ -107,5 +134,12 @@ public class SchoolSwingAppE2E extends AssertJSwingJUnitTestCase {
 				new Document()
 					.append("id", id)
 					.append("name", name));
+	}
+
+	private void removeTestStudentFromDatabase(String id) {
+		mongoClient
+			.getDatabase(DB_NAME)
+			.getCollection(COLLECTION_NAME)
+			.deleteOne(Filters.eq("id", id));
 	}
 }
