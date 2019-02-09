@@ -78,10 +78,11 @@ public class SchoolSwingAppSteps {
 		}).using(BasicRobot.robotWithCurrentAwtHierarchy());
 	}
 
-	@Then("The list contains an element with id {string} and name {string}")
-	public void the_list_contains_an_element_with_id_and_name(String id, String name) {
-		assertThat(window.list().contents())
-			.anySatisfy(e -> assertThat(e).contains(id, name));
+	@Then("The list contains elements with the following values")
+	public void the_list_contains_elements_with_the_following_values(List<List<String>> values) {
+		values.forEach(
+			v -> assertThat(window.list().contents())
+				.anySatisfy(e -> assertThat(e).contains(v.get(0), v.get(1)))
+		);
 	}
-
 }
