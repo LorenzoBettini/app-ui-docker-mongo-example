@@ -1,5 +1,13 @@
 package com.examples.school.bdd.steps;
 
+import static org.assertj.swing.launcher.ApplicationLauncher.application;
+
+import javax.swing.JFrame;
+
+import org.assertj.swing.core.BasicRobot;
+import org.assertj.swing.core.GenericTypeMatcher;
+import org.assertj.swing.finder.WindowFinder;
+import org.assertj.swing.fixture.FrameFixture;
 import org.bson.Document;
 
 import com.mongodb.MongoClient;
@@ -18,6 +26,8 @@ public class SchoolSwingAppSteps {
 
 	private MongoClient mongoClient;
 
+	private FrameFixture window;
+
 	@Before
 	public void setUp() {
 		mongoClient = new MongoClient();
@@ -28,6 +38,10 @@ public class SchoolSwingAppSteps {
 	@After
 	public void tearDown() {
 		mongoClient.close();
+		// the window might be null if the step for showing the view
+		// fails or it's not executed
+		if (window != null)
+			window.cleanUp();
 	}
 
 	@Given("The database contains a student with id {string} and name {string}")
@@ -43,12 +57,24 @@ public class SchoolSwingAppSteps {
 
 	@When("The Student View is shown")
 	public void the_Student_View_is_shown() {
-		// Write code here that turns the phrase above into concrete actions
-		throw new PendingException();
+		// start the Swing application
+		application("com.examples.school.app.swing.SchoolSwingApp")
+			.withArgs(
+				"--db-name=" + DB_NAME,
+				"--db-collection=" + COLLECTION_NAME
+			)
+			.start();
+		// get a reference of its JFrame
+		window = WindowFinder.findFrame(new GenericTypeMatcher<JFrame>(JFrame.class) {
+			@Override
+			protected boolean isMatching(JFrame frame) {
+				return "Student View".equals(frame.getTitle()) && frame.isShowing();
+			}
+		}).using(BasicRobot.robotWithCurrentAwtHierarchy());
 	}
 
 	@Then("The list contains an element with id {string} and name {string}")
-	public void the_list_contains_an_element_with_id_and_name(String string, String string2) {
+	public void the_list_contains_an_element_with_id_and_name(String id, String name) {
 		// Write code here that turns the phrase above into concrete actions
 		throw new PendingException();
 	}
