@@ -104,4 +104,10 @@ public class SchoolSwingAppSteps {
 	public void the_user_clicks_the_button(String buttonText) {
 		window.button(JButtonMatcher.withText(buttonText)).click();
 	}
+
+	@Then("An error is shown containing the following values")
+	public void an_error_is_shown_containing_the_following_values(List<List<String>> values) {
+		assertThat(window.label("errorMessageLabel").text())
+			.contains(values.get(0));
+	}
 }
