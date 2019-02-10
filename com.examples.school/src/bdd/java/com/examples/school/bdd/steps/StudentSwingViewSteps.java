@@ -1,5 +1,7 @@
 package com.examples.school.bdd.steps;
 
+import static com.examples.school.bdd.steps.DatabaseSteps.COLLECTION_NAME;
+import static com.examples.school.bdd.steps.DatabaseSteps.DB_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.swing.launcher.ApplicationLauncher.application;
 
@@ -13,53 +15,19 @@ import org.assertj.swing.core.GenericTypeMatcher;
 import org.assertj.swing.core.matcher.JButtonMatcher;
 import org.assertj.swing.finder.WindowFinder;
 import org.assertj.swing.fixture.FrameFixture;
-import org.bson.Document;
-
-import com.mongodb.MongoClient;
 
 import io.cucumber.java.After;
-import io.cucumber.java.Before;
-import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-public class SchoolSwingAppSteps {
-
-	private static final String DB_NAME = "test-db";
-	private static final String COLLECTION_NAME = "test-collection";
-
-	private MongoClient mongoClient;
+public class StudentSwingViewSteps {
 
 	private FrameFixture window;
 
-	@Before
-	public void setUp() {
-		mongoClient = new MongoClient();
-		// always start with an empty database
-		mongoClient.getDatabase(DB_NAME).drop();
-	}
-
 	@After
 	public void tearDown() {
-		mongoClient.close();
-		// the window might be null if the step for showing the view
-		// fails or it's not executed
 		if (window != null)
 			window.cleanUp();
-	}
-
-	@Given("The database contains the students with the following values")
-	public void the_database_contains_the_students_with_the_following_values(
-			List<List<String>> values) {
-		values.forEach(
-			v -> mongoClient
-				.getDatabase(DB_NAME)
-				.getCollection(COLLECTION_NAME)
-				.insertOne(
-					new Document()
-						.append("id", v.get(0))
-						.append("name", v.get(1)))
-		);
 	}
 
 	@When("The Student View is shown")
