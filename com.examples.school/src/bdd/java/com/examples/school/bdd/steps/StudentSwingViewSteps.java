@@ -91,4 +91,16 @@ public class StudentSwingViewSteps {
 		assertThat(window.list().contents())
 			.anySatisfy(e -> assertThat(e).contains("10", "new student"));
 	}
+
+	@Given("The user provides student data in the text fields, specifying an existing id")
+	public void the_user_provides_student_data_in_the_text_fields_specifying_an_existing_id() {
+		window.textBox("idTextBox").enterText(DatabaseSteps.STUDENT_FIXTURE_1_ID);
+		window.textBox("nameTextBox").enterText("new student");
+	}
+
+	@Then("An error is shown containing the name of the existing student")
+	public void an_error_is_shown_containing_the_name_of_the_existing_student() {
+		assertThat(window.label("errorMessageLabel").text())
+			.contains(DatabaseSteps.STUDENT_FIXTURE_1_NAME);
+	}
 }
