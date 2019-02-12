@@ -7,6 +7,7 @@ import static org.assertj.swing.launcher.ApplicationLauncher.application;
 
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import javax.swing.JFrame;
 
@@ -100,6 +101,24 @@ public class StudentSwingViewSteps {
 
 	@Then("An error is shown containing the name of the existing student")
 	public void an_error_is_shown_containing_the_name_of_the_existing_student() {
+		assertThat(window.label("errorMessageLabel").text())
+			.contains(DatabaseSteps.STUDENT_FIXTURE_1_NAME);
+	}
+
+	@Given("The user selects a student from the list")
+	public void the_user_selects_a_student_from_the_list() {
+		window.list("studentList")
+			.selectItem(Pattern.compile(".*" + DatabaseSteps.STUDENT_FIXTURE_1_NAME + ".*"));
+	}
+
+	@Then("The student is removed from the list")
+	public void the_student_is_removed_from_the_list() {
+		assertThat(window.list().contents())
+			.noneMatch(e -> e.contains(DatabaseSteps.STUDENT_FIXTURE_1_NAME));
+	}
+
+	@Then("An error is shown containing the name of the selected student")
+	public void an_error_is_shown_containing_the_name_of_the_selected_student() {
 		assertThat(window.label("errorMessageLabel").text())
 			.contains(DatabaseSteps.STUDENT_FIXTURE_1_NAME);
 	}
