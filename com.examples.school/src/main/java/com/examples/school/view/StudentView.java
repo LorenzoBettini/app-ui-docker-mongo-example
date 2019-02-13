@@ -14,4 +14,6 @@ public interface StudentView {
 
 	void studentRemoved(Student student);
 
+	void showErrorStudentNotFound(String message, Student student);
+
 }
