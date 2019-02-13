@@ -83,7 +83,7 @@ public class SchoolControllerTest {
 			thenReturn(null);
 		schoolController.deleteStudent(student);
 		verify(studentView)
-			.showError("No existing student with id 1", student);
+			.showErrorStudentNotFound("No existing student with id 1", student);
 		verifyNoMoreInteractions(ignoreStubs(studentRepository));
 	}
 }
