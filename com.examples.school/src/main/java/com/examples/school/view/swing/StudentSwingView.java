@@ -1,6 +1,7 @@
 package com.examples.school.view.swing;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -8,6 +9,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.List;
 
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -134,6 +136,18 @@ public class StudentSwingView extends JFrame implements StudentView {
 		
 		listStudentsModel = new DefaultListModel<>();
 		listStudents = new JList<>(listStudentsModel);
+		listStudents.setCellRenderer(new DefaultListCellRenderer() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public Component getListCellRendererComponent(JList<?> list, Object value, int index,
+					boolean isSelected, boolean cellHasFocus) {
+				Student student = (Student) value;
+				return super.getListCellRendererComponent(list,
+					getDisplayString(student),
+					index, isSelected, cellHasFocus);
+			}
+		});
 		listStudents.addListSelectionListener(
 				e -> btnDeleteSelected.setEnabled(listStudents.getSelectedIndex() != -1));
 		listStudents.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -169,7 +183,7 @@ public class StudentSwingView extends JFrame implements StudentView {
 
 	@Override
 	public void showError(String message, Student student) {
-		lblErrorMessage.setText(message + ": " + student);
+		lblErrorMessage.setText(message + ": " + getDisplayString(student));
 	}
 
 	@Override
@@ -190,7 +204,11 @@ public class StudentSwingView extends JFrame implements StudentView {
 
 	@Override
 	public void showErrorStudentNotFound(String message, Student student) {
-		lblErrorMessage.setText(message + ": " + student);
+		lblErrorMessage.setText(message + ": " + getDisplayString(student));
 		listStudentsModel.removeElement(student);
+	}
+
+	private String getDisplayString(Student student) {
+		return student.getId() + " - " + student.getName();
 	}
 }
