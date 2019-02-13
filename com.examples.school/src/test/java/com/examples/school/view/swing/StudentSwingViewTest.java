@@ -117,6 +117,27 @@ public class StudentSwingViewTest extends AssertJSwingJUnitTestCase {
 	}
 
 	@Test
+	public void testShowErrorStudentNotFound() {
+		// setup
+		Student student1 = new Student("1", "test1");
+		Student student2 = new Student("2", "test2");
+		GuiActionRunner.execute(
+			() -> {
+				DefaultListModel<Student> listStudentsModel = studentSwingView.getListStudentsModel();
+				listStudentsModel.addElement(student1);
+				listStudentsModel.addElement(student2);
+			}
+		);
+		GuiActionRunner.execute(
+			() -> studentSwingView.showErrorStudentNotFound("error message", student1)
+		);
+		window.label("errorMessageLabel")
+			.requireText("error message: " + student1);
+		assertThat(window.list().contents())
+			.containsExactly(student2.toString());
+	}
+
+	@Test
 	public void testStudentAddedShouldAddTheStudentToTheListAndResetTheErrorLabel() {
 		Student student = new Student("1", "test1");
 		GuiActionRunner.execute(
