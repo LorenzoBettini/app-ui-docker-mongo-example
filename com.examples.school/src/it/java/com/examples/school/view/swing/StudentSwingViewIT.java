@@ -87,7 +87,7 @@ public class StudentSwingViewIT extends AssertJSwingJUnitTestCase {
 			() -> schoolController.allStudents());
 		// and verify that the view's list is populated
 		assertThat(window.list().contents())
-			.containsExactly(student1.toString(), student2.toString());
+			.containsExactly("1 - test1", "2 - test2");
 	}
 
 	@Test @GUITest
@@ -96,7 +96,7 @@ public class StudentSwingViewIT extends AssertJSwingJUnitTestCase {
 		window.textBox("nameTextBox").enterText("test");
 		window.button(JButtonMatcher.withText("Add")).click();
 		assertThat(window.list().contents())
-			.containsExactly(new Student("1", "test").toString());
+			.containsExactly("1 - test");
 	}
 
 	@Test @GUITest
@@ -108,8 +108,7 @@ public class StudentSwingViewIT extends AssertJSwingJUnitTestCase {
 		assertThat(window.list().contents())
 			.isEmpty();
 		window.label("errorMessageLabel")
-			.requireText("Already existing student with id 1: "
-				+ new Student("1", "existing"));
+			.requireText("Already existing student with id 1: 1 - existing");
 	}
 
 	@Test @GUITest
@@ -135,6 +134,6 @@ public class StudentSwingViewIT extends AssertJSwingJUnitTestCase {
 		assertThat(window.list().contents())
 			.isEmpty();
 		window.label("errorMessageLabel")
-			.requireText("No existing student with id 1: " + student);
+			.requireText("No existing student with id 1: 1 - non existent");
 	}
 }
