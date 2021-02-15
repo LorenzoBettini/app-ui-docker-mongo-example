@@ -3,6 +3,7 @@ package com.examples.school.controller;
 import static org.mockito.Mockito.*;
 import static java.util.Arrays.asList;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -36,9 +37,11 @@ public class SchoolControllerIT {
 	private static final String SCHOOL_DB_NAME = "school";
 	private static final String STUDENT_COLLECTION_NAME = "student";
 
+	private AutoCloseable closeable;
+
 	@Before
 	public void setUp() {
-		MockitoAnnotations.initMocks(this);
+		closeable = MockitoAnnotations.openMocks(this);
 		studentRepository =
 			new StudentMongoRepository(new MongoClient("localhost"),
 					SCHOOL_DB_NAME, STUDENT_COLLECTION_NAME);
@@ -47,6 +50,11 @@ public class SchoolControllerIT {
 			studentRepository.delete(student.getId());
 		}
 		schoolController = new SchoolController(studentView, studentRepository);
+	}
+
+	@After
+	public void releaseMocks() throws Exception {
+		closeable.close();
 	}
 
 	@Test

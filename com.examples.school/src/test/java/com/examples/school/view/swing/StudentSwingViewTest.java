@@ -35,9 +35,11 @@ public class StudentSwingViewTest extends AssertJSwingJUnitTestCase {
 	@Mock
 	private SchoolController schoolController;
 
+	private AutoCloseable closeable;
+
 	@Override
 	protected void onSetUp() {
-		MockitoAnnotations.initMocks(this);
+		closeable = MockitoAnnotations.openMocks(this);
 		GuiActionRunner.execute(() -> {
 			studentSwingView = new StudentSwingView();
 			studentSwingView.setSchoolController(schoolController);
@@ -45,6 +47,11 @@ public class StudentSwingViewTest extends AssertJSwingJUnitTestCase {
 		});
 		window = new FrameFixture(robot(), studentSwingView);
 		window.show(); // shows the frame to test
+	}
+
+	@Override
+	protected void onTearDown() throws Exception {
+		closeable.close();
 	}
 
 	@Test @GUITest
