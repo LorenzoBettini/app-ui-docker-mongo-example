@@ -39,11 +39,14 @@ public class SchoolControllerIT {
 
 	private AutoCloseable closeable;
 
+	private static int mongoPort =
+		Integer.parseInt(System.getProperty("mongo.port", "27017"));
+
 	@Before
 	public void setUp() {
 		closeable = MockitoAnnotations.openMocks(this);
 		studentRepository =
-			new StudentMongoRepository(new MongoClient("localhost"),
+			new StudentMongoRepository(new MongoClient("localhost", mongoPort),
 					SCHOOL_DB_NAME, STUDENT_COLLECTION_NAME);
 		// explicit empty the database through the repository
 		for (Student student : studentRepository.findAll()) {

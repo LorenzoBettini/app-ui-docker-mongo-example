@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.bson.Document;
 
+import com.examples.school.bdd.SchoolSwingAppBDD;
 import com.mongodb.MongoClient;
 import com.mongodb.client.model.Filters;
 
@@ -25,7 +26,7 @@ public class DatabaseSteps {
 
 	@Before
 	public void setUp() {
-		mongoClient = new MongoClient();
+		mongoClient = new MongoClient("localhost", SchoolSwingAppBDD.mongoPort);
 		// always start with an empty database
 		mongoClient.getDatabase(DB_NAME).drop();
 	}

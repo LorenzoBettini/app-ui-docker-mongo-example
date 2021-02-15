@@ -17,6 +17,8 @@ import org.assertj.swing.core.matcher.JButtonMatcher;
 import org.assertj.swing.finder.WindowFinder;
 import org.assertj.swing.fixture.FrameFixture;
 
+import com.examples.school.bdd.SchoolSwingAppBDD;
+
 import io.cucumber.java.After;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -37,6 +39,7 @@ public class StudentSwingViewSteps {
 		// start the Swing application
 		application("com.examples.school.app.swing.SchoolSwingApp")
 			.withArgs(
+				"--mongo-port=" + SchoolSwingAppBDD.mongoPort,
 				"--db-name=" + DB_NAME,
 				"--db-collection=" + COLLECTION_NAME
 			)
