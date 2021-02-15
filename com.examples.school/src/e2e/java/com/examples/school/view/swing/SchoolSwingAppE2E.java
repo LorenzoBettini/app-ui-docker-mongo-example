@@ -19,7 +19,7 @@ import org.bson.Document;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.testcontainers.containers.GenericContainer;
+import org.testcontainers.containers.MongoDBContainer;
 
 import com.mongodb.MongoClient;
 import com.mongodb.client.model.Filters;
@@ -27,11 +27,9 @@ import com.mongodb.client.model.Filters;
 @RunWith(GUITestRunner.class)
 public class SchoolSwingAppE2E extends AssertJSwingJUnitTestCase {
 
-	@SuppressWarnings("rawtypes")
 	@ClassRule
-	public static final GenericContainer mongo =
-		new GenericContainer("mongo:4.4.3") 
-			.withExposedPorts(27017);
+	public static final MongoDBContainer mongo =
+		new MongoDBContainer("mongo:4.4.3");
 
 	private static final String DB_NAME = "test-db";
 	private static final String COLLECTION_NAME = "test-collection";
@@ -48,7 +46,7 @@ public class SchoolSwingAppE2E extends AssertJSwingJUnitTestCase {
 	@Override
 	protected void onSetUp() {
 		String containerIpAddress = mongo.getContainerIpAddress();
-		Integer mappedPort = mongo.getMappedPort(27017);
+		Integer mappedPort = mongo.getFirstMappedPort();
 		mongoClient = new MongoClient(containerIpAddress, mappedPort);
 		// always start with an empty database
 		mongoClient.getDatabase(DB_NAME).drop();

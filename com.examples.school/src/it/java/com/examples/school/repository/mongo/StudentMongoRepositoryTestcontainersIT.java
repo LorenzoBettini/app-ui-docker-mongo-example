@@ -11,7 +11,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
-import org.testcontainers.containers.GenericContainer;
+import org.testcontainers.containers.MongoDBContainer;
 
 import com.examples.school.model.Student;
 import com.mongodb.MongoClient;
@@ -32,11 +32,9 @@ import com.mongodb.client.MongoDatabase;
  */
 public class StudentMongoRepositoryTestcontainersIT {
 
-	@SuppressWarnings("rawtypes")
 	@ClassRule
-	public static final GenericContainer mongo =
-		new GenericContainer("mongo:4.4.3") 
-			.withExposedPorts(27017);
+	public static final MongoDBContainer mongo =
+		new MongoDBContainer("mongo:4.4.3");
 
 	private MongoClient client;
 	private StudentMongoRepository studentRepository;
@@ -50,7 +48,7 @@ public class StudentMongoRepositoryTestcontainersIT {
 		client = new MongoClient(
 			new ServerAddress(
 				mongo.getContainerIpAddress(),
-				mongo.getMappedPort(27017)));
+				mongo.getFirstMappedPort()));
 		studentRepository =
 			new StudentMongoRepository(client, SCHOOL_DB_NAME, STUDENT_COLLECTION_NAME);
 		MongoDatabase database = client.getDatabase(SCHOOL_DB_NAME);
