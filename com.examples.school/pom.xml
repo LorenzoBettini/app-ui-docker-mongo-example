@@ -211,4 +211,32 @@
     </plugins>
   </build>
 
+  <profiles>
+    <profile>
+      <id>skip-testcontainers</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-failsafe-plugin</artifactId>
+            <configuration>
+              <excludes>
+                <exclude>**/*Testcontainers*.java</exclude>
+              </excludes>
+            </configuration>
+            <executions>
+              <execution>
+              <id>e2e-tests</id>
+              <configuration>
+                <excludes>
+                  <exclude>**/*E2E.java</exclude>
+                </excludes>
+              </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>
