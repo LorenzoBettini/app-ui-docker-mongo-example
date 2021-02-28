@@ -1,5 +1,5 @@
 # app-ui-docker-mongo-example
-A simple example of a Maven project built on Travis CI with UI, E2E and BDD Tests with AssertJ Swing, Cucumber, and MongoDB
+A simple example of a Maven project built on GitHub Actions (on Linux, macOS and Windows) with UI, E2E and BDD Tests with AssertJ Swing, Cucumber, and MongoDB
 
 An example of Chapter _End-to-end tests_ of the book
 
