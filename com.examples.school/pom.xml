@@ -15,7 +15,7 @@
     <junit.version>4.13.1</junit.version>
     <assertj.swing.version>3.17.1</assertj.swing.version>
     <mockito.version>3.7.0</mockito.version>
-    <mongo.driver.version>3.12.7</mongo.driver.version>
+    <mongo.driver.version>3.12.8</mongo.driver.version>
     <mongo.java.server.version>1.37.0</mongo.java.server.version>
     <testcontainers.version>1.15.1</testcontainers.version>
     <picocli.version>4.6.1</picocli.version>
