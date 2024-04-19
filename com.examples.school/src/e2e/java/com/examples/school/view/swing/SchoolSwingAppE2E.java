@@ -45,7 +45,7 @@ public class SchoolSwingAppE2E extends AssertJSwingJUnitTestCase {
 
 	@Override
 	protected void onSetUp() {
-		String containerIpAddress = mongo.getContainerIpAddress();
+		String containerIpAddress = mongo.getHost();
 		Integer mappedPort = mongo.getFirstMappedPort();
 		mongoClient = new MongoClient(containerIpAddress, mappedPort);
 		// always start with an empty database
