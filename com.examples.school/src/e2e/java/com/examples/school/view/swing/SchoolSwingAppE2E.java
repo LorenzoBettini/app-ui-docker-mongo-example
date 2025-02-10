@@ -69,6 +69,7 @@ public class SchoolSwingAppE2E extends AssertJSwingJUnitTestCase {
 				return "Student View".equals(frame.getTitle()) && frame.isShowing();
 			}
 		}).using(robot());
+		window.target().setAlwaysOnTop(true);
 	}
 
 	@Override

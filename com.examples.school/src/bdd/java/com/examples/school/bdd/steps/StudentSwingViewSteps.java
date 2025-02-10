@@ -51,6 +51,7 @@ public class StudentSwingViewSteps {
 				return "Student View".equals(frame.getTitle()) && frame.isShowing();
 			}
 		}).using(BasicRobot.robotWithCurrentAwtHierarchy());
+		window.target().setAlwaysOnTop(true);
 	}
 
 	@Then("The list contains elements with the following values")

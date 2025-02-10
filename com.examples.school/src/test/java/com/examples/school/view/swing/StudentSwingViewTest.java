@@ -47,6 +47,7 @@ public class StudentSwingViewTest extends AssertJSwingJUnitTestCase {
 		});
 		window = new FrameFixture(robot(), studentSwingView);
 		window.show(); // shows the frame to test
+		window.target().setAlwaysOnTop(true);
 	}
 
 	@Override
@@ -93,6 +94,14 @@ public class StudentSwingViewTest extends AssertJSwingJUnitTestCase {
 	@Test
 	public void testDeleteButtonShouldBeEnabledOnlyWhenAStudentIsSelected() {
 		GuiActionRunner.execute(() -> studentSwingView.getListStudentsModel().addElement(new Student("1", "test")));
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		window.list("studentList").focus();
+		window.list("studentList").click();
 		window.list("studentList").selectItem(0);
 		JButtonFixture deleteButton = window.button(JButtonMatcher.withText("Delete Selected"));
 		deleteButton.requireEnabled();

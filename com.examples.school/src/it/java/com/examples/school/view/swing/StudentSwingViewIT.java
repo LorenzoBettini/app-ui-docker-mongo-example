@@ -68,6 +68,7 @@ public class StudentSwingViewIT extends AssertJSwingJUnitTestCase {
 		});
 		window = new FrameFixture(robot(), studentSwingView);
 		window.show(); // shows the frame to test
+		window.target().setAlwaysOnTop(true);
 	}
 
 	@Override
