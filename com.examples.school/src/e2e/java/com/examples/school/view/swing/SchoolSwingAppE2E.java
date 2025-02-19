@@ -29,7 +29,7 @@ public class SchoolSwingAppE2E extends AssertJSwingJUnitTestCase {
 
 	@ClassRule
 	public static final MongoDBContainer mongo =
-		new MongoDBContainer("mongo:4.4.3");
+		new MongoDBContainer("mongo:5");
 
 	private static final String DB_NAME = "test-db";
 	private static final String COLLECTION_NAME = "test-collection";
