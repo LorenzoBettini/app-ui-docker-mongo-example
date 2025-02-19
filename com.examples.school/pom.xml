@@ -19,7 +19,7 @@
     <mongo.java.server.version>1.39.0</mongo.java.server.version>
     <testcontainers.version>1.19.3</testcontainers.version>
     <picocli.version>4.6.1</picocli.version>
-    <cucumber.version>5.5.0</cucumber.version>
+    <cucumber.version>7.21.1</cucumber.version>
   </properties>
 
   <dependencies>
