@@ -32,7 +32,7 @@
       <!-- required to see Mongo Java Driver logs -->
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
-      <version>1.2.3</version>
+      <version>1.2.13</version>
     </dependency>
     <dependency>
       <groupId>info.picocli</groupId>
@@ -90,6 +90,21 @@
   </dependencies>
 
   <build>
+    <pluginManagement>
+      <plugins>
+        <!--  Make sure that surefire can run JUnit 5 tests
+          by specifying a known version -->
+        <plugin>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>3.5.2</version>
+        </plugin>
+        <!-- For report-only and failsafe-report-only -->
+        <plugin>
+          <artifactId>maven-surefire-report-plugin</artifactId>
+          <version>3.5.2</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
     <plugins>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
@@ -182,7 +197,7 @@
         <configuration>
           <images>
             <image>
-              <name>mongo:4.4.3</name>
+              <name>mongo:5</name>
               <run>
                 <ports>
                   <port>mongo.mapped.port:27017</port>
@@ -213,6 +228,8 @@
 
   <profiles>
     <profile>
+      <!-- Testcontainers does not yet support Windows containers
+        https://github.com/testcontainers/testcontainers-java/issues/2960 -->
       <id>skip-testcontainers</id>
       <build>
         <plugins>
